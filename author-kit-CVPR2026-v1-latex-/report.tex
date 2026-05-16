@@ -73,12 +73,12 @@ DINOv3~\cite{darcet2023registers} produce dense
 patch features that are remarkably useful even without any
 matching-specific supervision: nearest-neighbor patches within and
 across images already align with semantic structure and approximate
-object correspondences. A qualitative matching example with a frozen,
-LoRA-tuned ViT-S/16 (Fig.~\ref{fig:teaser}) illustrates this
-directly --- mutual-nearest-neighbor correspondences computed solely
-on patch tokens recover the underlying geometry of a held-out NAVI
-pair without any matching-specific architecture.
-
+object correspondences. A qualitative example on a held-out NAVI pair
+with a \emph{frozen, zero-shot} ViT-S/16 backbone
+(Fig.~\ref{fig:teaser}) illustrates the task directly --- given two
+views of the same object, mutual-nearest-neighbour correspondences
+computed solely on patch tokens already recover much of the underlying
+geometry without any matching-specific architecture or training.
 This raises a natural question for the local feature-matching
 community: \emph{can the matching quality of a frozen DINOv3 backbone
 be substantially improved with a minimal, parameter-efficient
@@ -139,17 +139,16 @@ or a stronger adapter family.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\linewidth]{../presentation/result/teaser_matching_lora.png}
-\caption{\textbf{Local feature matching with LoRA-tuned DINOv3 patch
-tokens.} Mutual-nearest-neighbour correspondences (top-60 by cosine
-score, colour-coded green$=$high to red$=$low) on a held-out NAVI pair,
-using ViT-S/16 patch features from our LoRA-tuned backbone. Despite
-keeping all 22M backbone parameters frozen and training only $0.06\%$
-of them as rank-4 LoRA adapters on Q/V, MNN over patch tokens already
-yields visually clean, geometrically consistent matches. The paper
-asks how much of this gain comes from genuine feature movement and
-how much from a low-rank re-alignment of an essentially unchanged
-representation.}
+\includegraphics[width=\linewidth]{../output/teaser_pairs/teaser_zs_circo_fish_holder_004_020.png}
+\caption{\textbf{The local feature matching task.} Two views of the
+same object from a held-out NAVI scene; coloured lines are the top-60
+mutual-nearest-neighbour patch correspondences produced by a
+\emph{frozen, zero-shot} DINOv3 ViT-S/16 (no matching-specific
+training), with green$=$high and red$=$low cosine similarity. Despite
+strong viewpoint change, the foundation backbone already recovers a
+largely geometry-consistent set of matches, motivating the question
+studied in this paper: how much can a minimal, parameter-efficient
+adaptation push this further?}
 \label{fig:teaser}
 \end{figure}
 
