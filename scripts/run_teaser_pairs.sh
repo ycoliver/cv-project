@@ -12,7 +12,7 @@
 #     bash scripts/run_teaser_pairs.sh --also_zeroshot   # also dump ZS
 #
 # Optional environment overrides:
-#     DATA_ROOT  : NAVI image root         (default: datasets/navi_resized)
+#     DATA_ROOT  : NAVI image root         (default: datasets/navi_v1.5)
 #     CKPT       : LoRA checkpoint path    (default: output/navi_small/lora_ckpt/checkpoint_latest.pth)
 #     OUT_DIR    : output directory        (default: presentation/result/teaser_pairs)
 #     IMG_SIZE   : model input resolution  (default: 448)
@@ -20,7 +20,7 @@
 # ----------------------------------------------------------------------
 set -euo pipefail
 
-DATA_ROOT="${DATA_ROOT:-datasets/navi_resized}"
+DATA_ROOT="${DATA_ROOT:-datasets/navi_v1.5}"
 CKPT="${CKPT:-output/navi_small/lora_ckpt/checkpoint_latest.pth}"
 OUT_DIR="${OUT_DIR:-presentation/result/teaser_pairs}"
 IMG_SIZE="${IMG_SIZE:-448}"
@@ -38,7 +38,9 @@ mkdir -p "$OUT_DIR"
 # Sanity checks
 if [[ ! -d "$DATA_ROOT" ]]; then
     echo "[teaser] ERROR: DATA_ROOT '$DATA_ROOT' does not exist." >&2
-    echo "[teaser] Hint: try   DATA_ROOT=datasets/navi  bash $0" >&2
+    echo "[teaser] Hint: override it, e.g." >&2
+    echo "           DATA_ROOT=datasets/navi_v1.5 bash $0" >&2
+    echo "           DATA_ROOT=datasets/navi_resized bash $0" >&2
     exit 1
 fi
 if [[ ! -f "$CKPT" ]]; then
